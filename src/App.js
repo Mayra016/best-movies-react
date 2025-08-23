@@ -1,23 +1,28 @@
 import logo from './logo.svg';
+import React, { useState } from "react";
+import { LanguageProvider } from "./components/LanguageProvider";
 import './App.css';
+import Menu from './pages/menu';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import LanguageSelect from './components/languageSelect';
+
 
 function App() {
+  const [language, setLanguage] = useState(localStorage.getItem("lang") || "EN");
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      
+      <LanguageProvider>
+        <LanguageSelect></LanguageSelect>
+        <Router>
+          <Routes>
+            <Route path="/menu" element={<Menu />} />
+            <Route path="/" element={<Menu />} />
+          </Routes>
+        </Router>
+
+      </LanguageProvider>
     </div>
   );
 }
