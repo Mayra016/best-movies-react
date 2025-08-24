@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { LanguageProvider } from "./components/LanguageProvider";
 import './App.css';
 import Menu from './pages/menu';
+import Play from './pages/play';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LanguageSelect from './components/languageSelect';
 
@@ -19,6 +20,7 @@ function App() {
           <Routes>
             <Route path="/menu" element={<Menu />} />
             <Route path="/" element={<Menu />} />
+            <Route path="/play" element={<Play />} />
           </Routes>
         </Router>
 
