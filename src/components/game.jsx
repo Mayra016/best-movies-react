@@ -2,7 +2,7 @@ import { useTranslation } from "../components/LanguageProvider";
 import Movie from "../components/movie";
 import { useState, useEffect, useRef } from "react";
 
-const Game = ({sendData}) => {
+const Game = ({ sendData }) => {
     const {text} = useTranslation();
     const [userInput, setUserInput] = useState("");
     const [levelMovies, setLevelMovies] = useState([]);
@@ -17,11 +17,19 @@ const Game = ({sendData}) => {
     }
 
     function checkAnswer(value) {
+        console.log(value + " | " + levelMovies[0].title);
+        console.log(levelMovies[0].popularity + " | " + levelMovies[1].popularity);
+
         if (levelMovies.length === 2) {
             if (
                 levelMovies[0].title === value &&
                 levelMovies[0].popularity >= levelMovies[1].popularity
             ) {
+                gameSection.current?.classList.add("green");
+                sendData(true);
+                setTimeout(() => gameSection.current?.classList.remove("green"), 2000);
+            } else if (levelMovies[1].title === value &&
+                levelMovies[1].popularity >= levelMovies[0].popularity) {
                 gameSection.current?.classList.add("green");
                 sendData(true);
                 setTimeout(() => gameSection.current?.classList.remove("green"), 2000);

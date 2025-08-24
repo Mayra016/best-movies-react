@@ -14,7 +14,7 @@ const Play = () => {
     }
 
     return(
-        <><Score score={score}></Score><Game sedData={handleUserAnswer}></Game></>
+        <><Score score={score}></Score><Game sendData={handleUserAnswer}></Game></>
     );
 }
 
