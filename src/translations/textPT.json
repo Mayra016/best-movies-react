@@ -1,5 +1,7 @@
 {
     "title": "Como jogar?",
     "description": "Escolha o filme mais popular entre as duas opções.",
-    "play": "Jogar"
+    "play": "Jogar",
+    "score" : "Score: ",
+    "play-title" : "Qual é o filme mais popular?"
 }
