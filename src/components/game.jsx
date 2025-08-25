@@ -1,24 +1,39 @@
+import { redirect } from "react-router-dom";
 import { useTranslation } from "../components/LanguageProvider";
 import Movie from "../components/movie";
 import { useState, useEffect, useRef } from "react";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const Game = ({ sendData }) => {
+    const navigate = useNavigate();
     const {text} = useTranslation();
     const [userInput, setUserInput] = useState("");
     const [levelMovies, setLevelMovies] = useState([]);
-    const apiKey = process.env.API_KEY;
+    let [posibleMoves, setPosibleMoves] = useState([]);
+    let [allMoves, setAllMoves] = useState([]);
+    const apiKey = process.env.REACT_APP_API_KEY;
     const baseImgUrl = "https://image.tmdb.org/t/p/w500";
     const gameSection = useRef(null);
-    let posibleMoves = [];
+    const langParam = text("lang-param");
+    const menuBtn = text("redirect-menu");
+    const cancelBtn = text("cancel");
 
     const handleUserInput = (value) => {
         setUserInput(value);
         checkAnswer(value);
     }
 
+    function shuffleArray(array) {
+        let newArray = [...array]; 
+        for (let i = newArray.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+        }
+        return newArray;
+    }
+
     function checkAnswer(value) {
-        console.log(value + " | " + levelMovies[0].title);
-        console.log(levelMovies[0].popularity + " | " + levelMovies[1].popularity);
 
         if (levelMovies.length === 2) {
             if (
@@ -27,22 +42,29 @@ const Game = ({ sendData }) => {
             ) {
                 gameSection.current?.classList.add("green");
                 sendData(true);
-                setTimeout(() => gameSection.current?.classList.remove("green"), 2000);
+                setTimeout(() => {
+                    gameSection.current?.classList.remove("green");
+                    nextLevel();
+                }, 500);
             } else if (levelMovies[1].title === value &&
                 levelMovies[1].popularity >= levelMovies[0].popularity) {
                 gameSection.current?.classList.add("green");
                 sendData(true);
-                setTimeout(() => gameSection.current?.classList.remove("green"), 2000);
+                setTimeout(() => {
+                    gameSection.current?.classList.remove("green");
+                    nextLevel();
+                }, 500);
+                
             } else {
                 gameSection.current?.classList.add("red");
-                setTimeout(() => gameSection.current?.classList.remove("red"), 2000);
+                showAlert(text("lost-title"), text("lost-text"), "error");
             }
         }
     }
 
     useEffect(() => { 
-        const url = `https://api.themoviedb.org/3/trending/movie/day?language=en-US`; 
-        console.log(apiKey); 
+        const url = `https://api.themoviedb.org/3/trending/movie/day?language=${langParam}&page=3`; 
+
         fetch(url, {
             method: "GET",
             headers: {
@@ -51,16 +73,18 @@ const Game = ({ sendData }) => {
             }
           })
             .then(res => { 
-                console.log(res); 
                 return res.json(); 
             }) 
             .then(data => { 
-                console.log(data.results); 
-                posibleMoves = data.results; 
-                setLevelMovies([data.results[0], data.results[1]]); 
+
+                const shuffled = shuffleArray(data.results);
+                setPosibleMoves(shuffled);
+                setAllMoves(shuffled);
+                setLevelMovies([shuffled[0], shuffled[1]]);
+
             }) .
             catch(err => console.error(err)); 
-    }, []);
+    }, [apiKey]);
 
     if (levelMovies.length < 2) {
         return <div>Loading...</div>; 
