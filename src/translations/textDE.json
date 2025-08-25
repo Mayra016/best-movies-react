@@ -3,5 +3,13 @@
     "description" : "Wähle den beliebtesten Film aus den beiden Optionen.",
     "play" : "Spielen",
     "score" : "Punkte: ",
-    "play-title" : "Was ist der beliebteste Film?"
+    "play-title" : "Was ist der beliebteste Film?",
+    "lost-title" : "Du hast verloren!",
+    "lost-text" : "Drucke den Button zum Menu", 
+    "redirect-menu" : "Menu",
+    "cancel" : "Abbrechen",
+    "lang-param" : "de-DE",
+    "win-title" : "Woooow, du hast alle möglichen Level bestanden!",
+    "win-text" : "Komm morgen wieder, um weitere Herausforderungen zu meistern."
+
 }

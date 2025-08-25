@@ -3,5 +3,12 @@
     "description": "Elige la película más popular entre las dos opciones.",
     "play": "Jugar",
     "score" : "Puntos: ",
-    "play-title" : "¿Cuál es la peli más popular?"
+    "play-title" : "¿Cuál es la peli más popular?",
+    "lost-title" : "¡Has perdido!",
+    "lost-text" : "Haz clic en el botón para ir volver menú", 
+    "redirect-menu" : "Menú",
+    "cancel" : "Cancelar",
+    "lang-param" : "es-ES",
+    "win-title" : "Woooow, ¡Has logrado pasar todos los niveles!",
+    "win-text" : "Vuelve mañana para más desafíos."
 }
