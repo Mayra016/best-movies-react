@@ -13,7 +13,7 @@ const Menu = () => {
                 <h3>{text("description")}</h3>
             </div>
             <div className="container">
-                <button onClick={() => redirect("play")} >{text("play")}</button>
+                <button onClick={() => redirect("/play")} >{text("play")}</button>
             </div>
             
         </div>      
