@@ -24,6 +24,31 @@ const Game = ({ sendData }) => {
         checkAnswer(value);
     }
 
+    function resetLevel() {
+        posibleMoves = shuffleArray(allMoves);
+        sendData(false);
+        nextLevel();
+    }
+
+    function nextLevel() {
+        let filtered = [];
+        if (posibleMoves.length > 3) {
+            filtered = posibleMoves.filter(
+                movie => movie !== levelMovies[0] && movie !== levelMovies[1]
+            );
+            setPosibleMoves(filtered);
+        }
+    
+        if (filtered.length >= 2) {
+
+            setLevelMovies([filtered[0], filtered[1]]);
+        } else {
+
+            setLevelMovies([]);
+            showAlert(text("win-title"), text("win-text"), "success");
+        }
+    }
+    
 
     function showAlert(title, text, icon) {
         Swal.fire({
@@ -41,6 +66,16 @@ const Game = ({ sendData }) => {
                 gameSection.current?.classList.remove("red");
             }
         });
+    }
+    
+
+    function shuffleArray(array) {
+        let newArray = [...array]; 
+        for (let i = newArray.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+        }
+        return newArray;
     }
 
     function checkAnswer(value) {
@@ -70,15 +105,6 @@ const Game = ({ sendData }) => {
                 showAlert(text("lost-title"), text("lost-text"), "error");
             }
         }
-    }
-
-    function shuffleArray(array) {
-        let newArray = [...array]; 
-        for (let i = newArray.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
-        }
-        return newArray;
     }
 
     useEffect(() => { 
