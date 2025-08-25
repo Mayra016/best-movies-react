@@ -24,13 +24,23 @@ const Game = ({ sendData }) => {
         checkAnswer(value);
     }
 
-    function shuffleArray(array) {
-        let newArray = [...array]; 
-        for (let i = newArray.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
-        }
-        return newArray;
+
+    function showAlert(title, text, icon) {
+        Swal.fire({
+            title: title,
+            text: text,
+            icon: icon,
+            showCancelButton: true,
+            confirmButtonText: menuBtn,
+            cancelButtonText: cancelBtn
+        }).then((result) => {
+            if (result.isConfirmed) {
+                navigate("/")
+            } else {
+                resetLevel();
+                gameSection.current?.classList.remove("red");
+            }
+        });
     }
 
     function checkAnswer(value) {
@@ -60,6 +70,15 @@ const Game = ({ sendData }) => {
                 showAlert(text("lost-title"), text("lost-text"), "error");
             }
         }
+    }
+
+    function shuffleArray(array) {
+        let newArray = [...array]; 
+        for (let i = newArray.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+        }
+        return newArray;
     }
 
     useEffect(() => { 
